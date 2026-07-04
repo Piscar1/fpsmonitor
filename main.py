@@ -1,11 +1,47 @@
 import sys
+import os
 import ctypes
-from PyQt6.QtWidgets import QApplication, QMessageBox
-from PyQt6.QtCore import QSettings
-from main_window import MainWindow
-from tray import TrayIcon
-from presentmon_fps import is_admin
-import theme
+import traceback
+
+
+def _fatal_error(exc_text: str):
+    """Записывает ошибку в crash.log рядом с программой и показывает окно."""
+    log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "crash.log")
+    try:
+        with open(log_path, "w", encoding="utf-8") as f:
+            f.write(exc_text)
+    except OSError:
+        pass
+    # Показываем ошибку: сначала пробуем Qt, потом нативный MessageBox
+    try:
+        from PyQt6.QtWidgets import QApplication, QMessageBox
+        app = QApplication.instance() or QApplication(sys.argv)
+        QMessageBox.critical(
+            None, "FPS Monitor — ошибка запуска",
+            f"Программа не смогла запуститься.\n\n{exc_text}\n\nЛог сохранён: {log_path}",
+        )
+    except Exception:
+        try:
+            ctypes.windll.user32.MessageBoxW(
+                None,
+                f"Ошибка запуска:\n\n{exc_text}\n\nЛог: {log_path}",
+                "FPS Monitor — ошибка запуска",
+                0x10,
+            )
+        except Exception:
+            print(exc_text, file=sys.stderr)
+
+
+try:
+    from PyQt6.QtWidgets import QApplication, QMessageBox
+    from PyQt6.QtCore import QSettings
+    from main_window import MainWindow
+    from tray import TrayIcon
+    from presentmon_fps import is_admin
+    import theme
+except Exception:
+    _fatal_error(traceback.format_exc())
+    sys.exit(1)
 
 
 def _maybe_elevate(app) -> bool:
@@ -73,4 +109,10 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except SystemExit:
+        raise
+    except Exception:
+        _fatal_error(traceback.format_exc())
+        sys.exit(1)
