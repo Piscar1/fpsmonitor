@@ -17,24 +17,35 @@ from presentmon_fps import PresentMonFPS
 from csv_logger import CSVLogger
 
 
-class MetricCard(QGroupBox):
-    """Карточка метрики."""
+class MetricCard(QFrame):
+    """Карточка метрики: заголовок сверху, значение крупным моноширинным шрифтом."""
     def __init__(self, title: str):
-        super().__init__(title)
+        super().__init__()
+        self.setObjectName("metricCard")
+        self.setMinimumHeight(74)
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(12, 8, 12, 10)
+        layout.setContentsMargins(14, 10, 14, 12)
+        layout.setSpacing(4)
+
+        self.lbl_title = QLabel(title.upper())
+        self.lbl_title.setProperty("class", "cardTitle")
+        layout.addWidget(self.lbl_title)
+
         self.lbl_value = QLabel("---")
-        self.lbl_value.setFont(QFont(theme.MONO, 14, QFont.Weight.DemiBold))
-        self.lbl_value.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.lbl_value.setFont(QFont(theme.MONO, 15, QFont.Weight.DemiBold))
         self.lbl_value.setWordWrap(True)
         layout.addWidget(self.lbl_value)
+        layout.addStretch(1)
+
+    def setTitle(self, title: str):
+        self.lbl_title.setText(title.upper())
 
     def set_value(self, text: str):
         self.lbl_value.setText(text)
 
     def set_temp_color(self, temp, warn, crit):
         state = 'ok' if temp < warn else ('warn' if temp < crit else 'crit')
-        value_col = theme.OK if state == 'ok' else (theme.WARN if state == 'warn' else theme.CRIT)
+        value_col = theme.TEXT if state == 'ok' else (theme.WARN if state == 'warn' else theme.CRIT)
         self.lbl_value.setStyleSheet(f"color: {value_col};")
         if self.property('state') != state:
             self.setProperty('state', state)
@@ -150,31 +161,32 @@ class MainWindow(QMainWindow):
 
         hero = QFrame()
         hero.setObjectName("heroCard")
+        hero.setFixedHeight(150)
         hero_l = QVBoxLayout(hero)
-        hero_l.setContentsMargins(20, 14, 20, 16)
-        hero_l.setSpacing(2)
+        hero_l.setContentsMargins(20, 14, 20, 12)
+        hero_l.setSpacing(0)
         cap_fps = QLabel("ТЕКУЩИЙ FPS")
         cap_fps.setProperty("class", "caption")
         hero_l.addWidget(cap_fps)
         self.lbl_fps = QLabel("--")
         self.lbl_fps.setObjectName("fpsValue")
-        self.lbl_fps.setFont(QFont(theme.MONO, 56, QFont.Weight.Bold))
-        self.lbl_fps.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.lbl_fps.setStyleSheet(f"color: {theme.OK};")
+        self.lbl_fps.setFont(QFont(theme.MONO, 52, QFont.Weight.Bold))
+        self.lbl_fps.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
+        self.lbl_fps.setStyleSheet(f"color: {theme.TEXT};")
         hero_l.addWidget(self.lbl_fps, stretch=1)
-        top_layout.addWidget(hero, stretch=3)
+        top_layout.addWidget(hero, stretch=2)
 
         stats = QFrame()
         stats.setObjectName("statsCard")
+        stats.setFixedHeight(150)
         stats_grid = QGridLayout(stats)
-        stats_grid.setContentsMargins(18, 14, 18, 14)
-        stats_grid.setHorizontalSpacing(28)
-        stats_grid.setVerticalSpacing(10)
+        stats_grid.setContentsMargins(20, 14, 20, 14)
+        stats_grid.setHorizontalSpacing(24)
+        stats_grid.setVerticalSpacing(6)
 
         stat_items = [
-            ("MIN", "lbl_min"), ("MAX", "lbl_max"),
-            ("AVG", "lbl_avg"), ("1% LOW", "lbl_1low"),
-            ("0.1% LOW", "lbl_01low"), ("FRAMETIME", "lbl_frametime"),
+            ("AVG", "lbl_avg"), ("MIN", "lbl_min"), ("MAX", "lbl_max"),
+            ("1% LOW", "lbl_1low"), ("0.1% LOW", "lbl_01low"), ("FRAMETIME", "lbl_frametime"),
         ]
         for i, (cap_text, attr) in enumerate(stat_items):
             lbl_cap = QLabel(cap_text)
@@ -183,12 +195,12 @@ class MainWindow(QMainWindow):
             lbl_val.setProperty("class", "statValue")
             setattr(self, attr, lbl_val)
             box = QVBoxLayout()
-            box.setSpacing(1)
+            box.setSpacing(0)
             box.addWidget(lbl_cap)
             box.addWidget(lbl_val)
-            row, col = divmod(i, 2)
+            row, col = divmod(i, 3)
             stats_grid.addLayout(box, row, col)
-        top_layout.addWidget(stats, stretch=2)
+        top_layout.addWidget(stats, stretch=3)
 
         main_layout.addLayout(top_layout)
 
@@ -200,6 +212,7 @@ class MainWindow(QMainWindow):
         pg.setConfigOptions(antialias=True)
         self.plot = pg.PlotWidget()
         self._style_plot(self.plot, 'FPS / %', 'Время (с)')
+        self.plot.setMinimumHeight(180)
         self.fps_curve = self.plot.plot([], [], pen=pg.mkPen(theme.GRAPH_FPS, width=2), name="FPS")
         self.cpu_curve = self.plot.plot([], [], pen=pg.mkPen(theme.GRAPH_CPU, width=1), name="CPU %")
         self.gpu_curve = self.plot.plot([], [], pen=pg.mkPen(theme.GRAPH_GPU, width=1), name="GPU %")
@@ -208,9 +221,10 @@ class MainWindow(QMainWindow):
         # Frametime graph (optional)
         self.ft_plot = pg.PlotWidget()
         self._style_plot(self.ft_plot, 'ms', 'Время (с)')
+        self.ft_plot.setFixedHeight(150)
         self.ft_curve = self.ft_plot.plot([], [], pen=pg.mkPen(theme.GRAPH_GPU, width=2), name="Frametime")
         self.ft_plot.setVisible(False)
-        main_layout.addWidget(self.ft_plot, stretch=1)
+        main_layout.addWidget(self.ft_plot)
 
         # --- Bottom: Metric cards ---
         cap_sensors = QLabel("ДАТЧИКИ")
@@ -218,13 +232,14 @@ class MainWindow(QMainWindow):
         main_layout.addWidget(cap_sensors)
 
         self.cards_widget = QWidget()
-        cards_layout = QGridLayout(self.cards_widget)
-        cards_layout.setContentsMargins(0, 0, 0, 0)
-        cards_layout.setHorizontalSpacing(10)
-        cards_layout.setVerticalSpacing(8)
+        self.cards_layout = QGridLayout(self.cards_widget)
+        self.cards_layout.setContentsMargins(0, 0, 0, 0)
+        self.cards_layout.setHorizontalSpacing(10)
+        self.cards_layout.setVerticalSpacing(10)
 
         self.card_cpu = MetricCard("")
         self.card_cpu_cores = MetricCard("")
+        self.card_cpu_cores.lbl_value.setFont(QFont(theme.MONO, 10))
         self.card_cpu_freq = MetricCard("")
         self.card_cpu_temp = MetricCard("")
         self.card_ram = MetricCard("")
@@ -238,16 +253,30 @@ class MainWindow(QMainWindow):
         self.card_motherboard = MetricCard("Материнская плата")
         self.card_vrm = MetricCard("VRM")
 
-        cards = [
+        self._all_cards = [
             self.card_cpu, self.card_cpu_cores, self.card_cpu_freq, self.card_cpu_temp,
             self.card_ram, self.card_gpu, self.card_gpu_mem, self.card_gpu_freq, self.card_gpu_temp,
             self.card_gpu_power, self.card_gpu_voltage, self.card_gpu_mem_freq,
             self.card_motherboard, self.card_vrm
         ]
-        for i, card in enumerate(cards):
-            cards_layout.addWidget(card, i // 3, i % 3)
+        self._visible_cards_key = None
+        self._relayout_cards()
 
         main_layout.addWidget(self.cards_widget, stretch=1)
+
+    def _relayout_cards(self):
+        """Перекладывает только видимые карточки в сетку 4 колонки — без дыр."""
+        visible = [c for c in self._all_cards if not c.isHidden()]
+        key = tuple(id(c) for c in visible)
+        if key == self._visible_cards_key:
+            return
+        self._visible_cards_key = key
+        # Снять все карточки с сетки
+        while self.cards_layout.count():
+            self.cards_layout.takeAt(0)
+        cols = 4
+        for i, card in enumerate(visible):
+            self.cards_layout.addWidget(card, i // cols, i % cols)
 
     def _style_plot(self, plot, left_label: str, bottom_label: str):
         """Apply the app theme to a pyqtgraph PlotWidget."""
@@ -424,7 +453,7 @@ class MainWindow(QMainWindow):
         # CPU freq
         freq = m.get('cpu_freq')
         if freq:
-            self.card_cpu_freq.set_value(f"\u26A1 {freq:.0f} MHz")
+            self.card_cpu_freq.set_value(f"{freq:.0f} MHz")
         else:
             self.card_cpu_freq.hide()
 
@@ -432,7 +461,7 @@ class MainWindow(QMainWindow):
         cpu_temp = m.get('cpu_temp')
         if cpu_temp is not None:
             self.card_cpu_temp.show()
-            self.card_cpu_temp.set_value(f"\U0001F321\uFE0F {cpu_temp:.1f}C")
+            self.card_cpu_temp.set_value(f"{cpu_temp:.1f} \u00B0C")
             self.card_cpu_temp.set_temp_color(cpu_temp, self._cpu_warn, self._cpu_crit)
         else:
             self.card_cpu_temp.hide()
@@ -469,7 +498,7 @@ class MainWindow(QMainWindow):
         # GPU freq
         gpu_freq = m.get('gpu_freq')
         if gpu_freq is not None:
-            self.card_gpu_freq.set_value(f"\u26A1 {gpu_freq} MHz")
+            self.card_gpu_freq.set_value(f"{gpu_freq} MHz")
         else:
             self.card_gpu_freq.hide()
 
@@ -499,7 +528,7 @@ class MainWindow(QMainWindow):
         # GPU temp
         gpu_temp = m.get('gpu_temp')
         if gpu_temp is not None:
-            self.card_gpu_temp.set_value(f"\U0001F321\uFE0F {gpu_temp}C")
+            self.card_gpu_temp.set_value(f"{gpu_temp} \u00B0C")
             self.card_gpu_temp.set_temp_color(gpu_temp, self._gpu_warn, self._gpu_crit)
         else:
             self.card_gpu_temp.hide()
@@ -507,7 +536,7 @@ class MainWindow(QMainWindow):
         # Motherboard temp
         mb_temp = m.get('motherboard_temp')
         if mb_temp is not None:
-            self.card_motherboard.set_value(f"\U0001F321\uFE0F {mb_temp}C")
+            self.card_motherboard.set_value(f"{mb_temp} \u00B0C")
             self.card_motherboard.set_temp_color(mb_temp, 50, 70)
         else:
             self.card_motherboard.hide()
@@ -515,10 +544,13 @@ class MainWindow(QMainWindow):
         # VRM temp
         vrm_temp = m.get('vrm_temp')
         if vrm_temp is not None:
-            self.card_vrm.set_value(f"\U0001F321\uFE0F {vrm_temp:.1f}C")
+            self.card_vrm.set_value(f"{vrm_temp:.1f} \u00B0C")
             self.card_vrm.set_temp_color(vrm_temp, 60, 90)
         else:
             self.card_vrm.hide()
+
+        # Пересобрать сетку без дыр от скрытых карточек
+        self._relayout_cards()
 
     def _prune_history(self, hist: list, now: float):
         cutoff = now - self._graph_history

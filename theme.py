@@ -60,6 +60,24 @@ QFrame#heroCard, QFrame#statsCard {{
     border: 1px solid {BORDER};
     border-radius: 14px;
 }}
+
+/* ---------- Metric cards ---------- */
+QFrame#metricCard {{
+    background-color: {BG_2};
+    border: 1px solid {BORDER};
+    border-radius: 12px;
+}}
+QFrame#metricCard:hover {{
+    border-color: {BORDER_HI};
+}}
+QFrame#metricCard[state="warn"] {{ border-color: rgba(245, 165, 36, 0.55); }}
+QFrame#metricCard[state="crit"] {{ border-color: rgba(255, 77, 94, 0.6); }}
+QLabel[class="cardTitle"] {{
+    color: {TEXT_DIM};
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+}}
 QLabel#fpsValue {{
     background: transparent;
 }}
