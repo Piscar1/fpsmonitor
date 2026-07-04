@@ -1,0 +1,97 @@
+﻿[2026-06-29 19:03:31.951] RemMon log started.
+[2026-06-29 19:03:31.985] hardwareId generated
+[2026-06-29 19:03:31.986] license service initialized
+[2026-06-29 19:03:31.986] license file path: C:\Users\Admin\AppData\Roaming\RemMon\license.dat
+[2026-06-29 19:03:31.991] license file missing; free version
+[2026-06-29 19:03:32.478] ETW provider enabled: Microsoft-Windows-DXGI
+[2026-06-29 19:03:32.478] ETW provider enabled: Microsoft-Windows-D3D9
+[2026-06-29 19:03:32.478] ETW provider enabled: Microsoft-Windows-Direct3D11
+[2026-06-29 19:03:32.485] ETW provider enabled: Microsoft-Windows-D3D11
+[2026-06-29 19:03:32.486] ETW provider enabled: Microsoft-Windows-D3D12
+[2026-06-29 19:03:32.486] ETW provider enabled: Microsoft-Windows-Vulkan-Loader
+[2026-06-29 19:03:32.499] ETW FPS session started.
+[2026-06-29 19:03:32.820] license file missing; free version
+[2026-06-29 19:03:33.473] Applied CPU settings: ShowBlock=True, ShowClock=True, ShowEAvgClock=True, ShowCoreGraph=False, ShowCoreGraphLabels=True, ShowCoreClocks=False, ShowPClocks=False, ShowEClocks=False
+[2026-06-29 19:03:33.503] frametime graph mode: fixed graph-sample buffer
+[2026-06-29 19:03:33.504] graph window ms = 10000
+[2026-06-29 19:03:33.504] graph sample interval ms = 33,333
+[2026-06-29 19:03:33.504] graph point count = 300
+[2026-06-29 19:03:33.504] graph width = 306
+[2026-06-29 19:03:33.560] CPU overlay visibility: ShowGraph=False, GraphVisibility=Collapsed, ShowCoreClocks=False, CoreClockRows=0, VisibleCoreClockRows=0, CoreClockPanel=Collapsed, Hybrid=False, PAvg=N/A, EAvg=N/A, EAvgRow=Collapsed
+[2026-06-29 19:03:34.202] PawnIO check started. Current status: NOT INSTALLED, Service: NOT REGISTERED
+[2026-06-29 19:03:34.278] PawnIO details: Registry=NOT FOUND, PawnIOLib.dll=NOT FOUND, PawnIO.sys=NOT FOUND, Service=NOT REGISTERED
+[2026-06-29 19:03:34.356] PawnIO is not installed. Installing through winget.
+[2026-06-29 19:03:34.357] Starting process: winget.exe install --id namazso.PawnIO --exact --accept-package-agreements --accept-source-agreements --silent --disable-interactivity
+[2026-06-29 19:03:39.476] ETW FPS target: AyuGram.exe PID 4172
+[2026-06-29 19:03:41.724] ETW FPS target: steamwebhelper.exe PID 10468
+[2026-06-29 19:03:41.728] frametime graph mode: fixed graph-sample buffer
+[2026-06-29 19:03:41.728] graph window ms = 10000
+[2026-06-29 19:03:41.728] graph sample interval ms = 33,333
+[2026-06-29 19:03:41.728] graph point count = 300
+[2026-06-29 19:03:41.729] graph width = 306
+[2026-06-29 19:03:48.966] Process exited: winget.exe, ExitCode=0
+[2026-06-29 19:03:49.052] PawnIO service is not registered. Skipping service start; PawnIO may be loaded on demand by LibreHardwareMonitor.
+[2026-06-29 19:03:49.134] PawnIO winget install finished. Current status: INSTALLED, Service: NOT REGISTERED
+[2026-06-29 19:03:49.212] PawnIO details: Registry=FOUND, PawnIOLib.dll=C:\Program Files\PawnIO\PawnIOLib.dll, PawnIO.sys=NOT FOUND, Service=NOT REGISTERED
+[2026-06-29 19:03:50.253] CPU Sets topology: Logical=12, Cores=12, EfficiencyClasses=0
+[2026-06-29 19:03:50.264] CPU Sets topology ignored: Cores=12, WmiCores=6, Hybrid=False
+[2026-06-29 19:03:50.520] CPU overlay visibility: ShowGraph=False, GraphVisibility=Collapsed, ShowCoreClocks=False, CoreClockRows=6, VisibleCoreClockRows=0, CoreClockPanel=Collapsed, Hybrid=False, PAvg=N/A, EAvg=N/A, EAvgRow=Collapsed
+[2026-06-29 19:03:53.347] CPU sensor resolver:
+[2026-06-29 19:03:53.348] CPU temperature sensor: Cpu / AMD Ryzen 5 5500 / Temperature / Core (Tctl/Tdie) = 50,375; Identifier=/amdcpu/0/temperature/2
+[2026-06-29 19:03:53.348] CPU clock sensor: Cpu / AMD Ryzen 5 5500 / Clock / Core Ratio x Bus Clock = 3817,826; Identifier=/amdcpu/0/clock/0; Sources=BCLK=99,812 MHz; 1=42,5x/4242,029 MHz, 2=42,5x/4242,029 MHz, 3=42,5x/4242,029 MHz, 4=34x/3393,623 MHz, 5=34x/3393,623 MHz, 6=34x/3393,623 MHz; Displayed=3817.826 MHz
+[2026-06-29 19:03:53.348] CPU power sensor: Cpu / AMD Ryzen 5 5500 / Power / Package = 19,383; Identifier=/amdcpu/0/power/0
+[2026-06-29 19:03:53.426] PawnIO: INSTALLED, Service: NOT REGISTERED
+[2026-06-29 19:03:54.229] Auto update check started.
+[2026-06-29 19:03:54.241] Update check started. ManifestUrl=https://r-mont.ru/RemMon/update.json, CurrentVersion=1.0.0
+[2026-06-29 19:03:54.316] ETW FPS target: AyuGram.exe PID 4172
+[2026-06-29 19:03:54.321] frametime graph mode: fixed graph-sample buffer
+[2026-06-29 19:03:54.321] graph window ms = 10000
+[2026-06-29 19:03:54.321] graph sample interval ms = 33,333
+[2026-06-29 19:03:54.321] graph point count = 300
+[2026-06-29 19:03:54.322] graph width = 306
+[2026-06-29 19:03:54.577] Update check completed. CurrentVersion=1.0.0.0, ServerVersion=1.0.0.0, UpdateAvailable=False
+[2026-06-29 19:04:11.035] ETW FPS target: ShareX.exe PID 5356
+[2026-06-29 19:04:11.038] frametime graph mode: fixed graph-sample buffer
+[2026-06-29 19:04:11.038] graph window ms = 10000
+[2026-06-29 19:04:11.038] graph sample interval ms = 33,333
+[2026-06-29 19:04:11.039] graph point count = 300
+[2026-06-29 19:04:11.039] graph width = 306
+[2026-06-29 19:04:16.788] ETW FPS target: AyuGram.exe PID 4172
+[2026-06-29 19:04:16.790] frametime graph mode: fixed graph-sample buffer
+[2026-06-29 19:04:16.790] graph window ms = 10000
+[2026-06-29 19:04:16.790] graph sample interval ms = 33,333
+[2026-06-29 19:04:16.791] graph point count = 300
+[2026-06-29 19:04:16.791] graph width = 306
+[2026-06-29 19:04:41.035] ETW FPS target: steamwebhelper.exe PID 10468
+[2026-06-29 19:04:41.038] frametime graph mode: fixed graph-sample buffer
+[2026-06-29 19:04:41.039] graph window ms = 10000
+[2026-06-29 19:04:41.039] graph sample interval ms = 33,333
+[2026-06-29 19:04:41.039] graph point count = 300
+[2026-06-29 19:04:41.039] graph width = 306
+[2026-06-29 19:04:50.537] ETW FPS target: AyuGram.exe PID 4172
+[2026-06-29 19:04:50.539] frametime graph mode: fixed graph-sample buffer
+[2026-06-29 19:04:50.539] graph window ms = 10000
+[2026-06-29 19:04:50.539] graph sample interval ms = 33,333
+[2026-06-29 19:04:50.539] graph point count = 300
+[2026-06-29 19:04:50.539] graph width = 306
+[2026-06-29 19:04:53.543] ETW FPS target: steamwebhelper.exe PID 2124
+[2026-06-29 19:04:53.544] frametime graph mode: fixed graph-sample buffer
+[2026-06-29 19:04:53.545] graph window ms = 10000
+[2026-06-29 19:04:53.545] graph sample interval ms = 33,333
+[2026-06-29 19:04:53.545] graph point count = 300
+[2026-06-29 19:04:53.545] graph width = 306
+[2026-06-29 19:05:21.956] license file missing; free version
+[2026-06-29 19:07:00.306] ETW FPS target: REDlauncher.exe PID 12136
+[2026-06-29 19:07:00.307] frametime graph mode: fixed graph-sample buffer
+[2026-06-29 19:07:00.307] graph window ms = 10000
+[2026-06-29 19:07:00.308] graph sample interval ms = 33,333
+[2026-06-29 19:07:00.308] graph point count = 300
+[2026-06-29 19:07:00.308] graph width = 306
+[2026-06-29 19:07:20.054] ETW FPS target: Cyberpunk2077.exe PID 11864
+[2026-06-29 19:07:20.056] frametime graph mode: fixed graph-sample buffer
+[2026-06-29 19:07:20.056] graph window ms = 10000
+[2026-06-29 19:07:20.056] graph sample interval ms = 33,333
+[2026-06-29 19:07:20.056] graph point count = 300
+[2026-06-29 19:07:20.057] graph width = 306
+[2026-06-29 19:08:39.322] Close requested from tray.
+[2026-06-29 19:08:39.338] RemMon shutdown started.
