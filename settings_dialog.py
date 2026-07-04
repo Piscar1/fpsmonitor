@@ -260,21 +260,21 @@ class SettingsDialog(QDialog):
         btn_graph_fps = QPushButton("Выбрать")
         btn_graph_fps.clicked.connect(lambda: self._pick_color('graph_fps_color', btn_graph_fps))
         self.lbl_graph_fps = QLabel("\u25A0")
-        self.lbl_graph_fps.setStyleSheet("font-size: 16px; color: #00FF00;")
+        self.lbl_graph_fps.setStyleSheet("font-size: 16px; color: #2BD576;")
         h_fps = QHBoxLayout(); h_fps.addWidget(btn_graph_fps); h_fps.addWidget(self.lbl_graph_fps)
         form_colors.addRow("FPS:", h_fps)
 
         btn_graph_cpu = QPushButton("Выбрать")
         btn_graph_cpu.clicked.connect(lambda: self._pick_color('graph_cpu_color', btn_graph_cpu))
         self.lbl_graph_cpu = QLabel("\u25A0")
-        self.lbl_graph_cpu.setStyleSheet("font-size: 16px; color: #FF6600;")
+        self.lbl_graph_cpu.setStyleSheet("font-size: 16px; color: #FF8A3D;")
         h_cpu = QHBoxLayout(); h_cpu.addWidget(btn_graph_cpu); h_cpu.addWidget(self.lbl_graph_cpu)
         form_colors.addRow("CPU:", h_cpu)
 
         btn_graph_gpu = QPushButton("Выбрать")
         btn_graph_gpu.clicked.connect(lambda: self._pick_color('graph_gpu_color', btn_graph_gpu))
         self.lbl_graph_gpu = QLabel("\u25A0")
-        self.lbl_graph_gpu.setStyleSheet("font-size: 16px; color: #00CCFF;")
+        self.lbl_graph_gpu.setStyleSheet("font-size: 16px; color: #38BDF8;")
         h_gpu = QHBoxLayout(); h_gpu.addWidget(btn_graph_gpu); h_gpu.addWidget(self.lbl_graph_gpu)
         form_colors.addRow("GPU:", h_gpu)
 
@@ -459,7 +459,7 @@ class SettingsDialog(QDialog):
         self.cb_graph_legend.setChecked(self.settings.value("graph_legend", True, type=bool))
         self.cb_graph_smooth.setChecked(self.settings.value("graph_smooth", True, type=bool))
 
-        defaults = {'graph_fps_color': '#00FF00', 'graph_cpu_color': '#FF6600', 'graph_gpu_color': '#00CCFF'}
+        defaults = {'graph_fps_color': '#2BD576', 'graph_cpu_color': '#FF8A3D', 'graph_gpu_color': '#38BDF8'}
         for key, lbl in [('graph_fps_color', self.lbl_graph_fps),
                         ('graph_cpu_color', self.lbl_graph_cpu),
                         ('graph_gpu_color', self.lbl_graph_gpu)]:
@@ -595,9 +595,9 @@ class SettingsDialog(QDialog):
             'graph_grid_y': self.cb_graph_grid_y.isChecked(),
             'graph_legend': self.cb_graph_legend.isChecked(),
             'graph_smooth': self.cb_graph_smooth.isChecked(),
-            'graph_fps_color': self.settings.value("graph_fps_color", "#00FF00"),
-            'graph_cpu_color': self.settings.value("graph_cpu_color", "#FF6600"),
-            'graph_gpu_color': self.settings.value("graph_gpu_color", "#00CCFF"),
+            'graph_fps_color': self.settings.value("graph_fps_color", "#2BD576"),
+            'graph_cpu_color': self.settings.value("graph_cpu_color", "#FF8A3D"),
+            'graph_gpu_color': self.settings.value("graph_gpu_color", "#38BDF8"),
             'show_progress_bars': self.cb_show_progress_bars.isChecked(),
             'show_frametime_bar': self.cb_show_frametime_bar.isChecked(),
             'overlay_bar_style': self.cb_bar_style.currentData(),
